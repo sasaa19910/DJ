@@ -22,18 +22,20 @@ DATA = {
 def recept(request, name_recipe):
     recipe = name_recipe
     servings = int(request.GET.get('serving', 1))
-    if servings == 1:
-        context = {
-            'recipe': DATA[f'{recipe}']
-        }
-        return render(request, 'calculator/index.html', context)
-    else:
+    if servings:
         for key, values in DATA[f'{recipe}'].items():
             DATA[f'{recipe}'][key] = values * servings
         context = {'recipe': DATA[f'{recipe}']
+                   }
+        return render(request, 'calculator/index.html', context)
+
+    else:
+        context = {
+            'recipe': DATA[f'{recipe}']
         }
     return render(request, 'calculator/index.html', context)
 
+    
 
 
 
